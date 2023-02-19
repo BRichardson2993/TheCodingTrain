@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>CryptidPets!</h1>
+    <img id="pigeon-head" width="500px" src="" alt="">
+    <h2>Cryptids by US State</h2>
+    <p id="cryptid-list">
+        
+    </p>
+</body>
+</html>
+
+<script>
+    alert("pssst....wanna see something weird?");
+
+    // WE BEGIN here, but there will be a better way (below)
+
+    // fetch('../images/pigeonhead.jpg')
+    //     // attach the promise
+    //     .then(response => {
+    //         return response.blob(); 
+    //     }).then(blob => { // the next promise
+    //     console.log(blob);
+    //     document.getElementById('pigeon-head').src = URL.createObjectURL(blob);
+    // })
+     // .catch(error => {
+    //     console.log('error!');
+    //     console.error(error);
+    // });
+    // so here we handle errors with the '.catch()' method;
+    // test this by altering the filename and misspelling it
+
+
+    cryptoSighting()
+    .then(response => {
+        console.log('Yay!');
+    })
+    .catch(error => {
+        console.log('error!');
+        console.error(error);
+    });
+
+    // all of the above can be refactored into fewer lines using 'async'
+
+    async function cryptoSighting() {
+        const response = await fetch('../images/pigeonhead.jpg');
+        const blob = await response.blob();
+        document.getElementById('pigeon-head').src = URL.createObjectURL(blob);
+    }
+
+//________________________________________________________________________________________
+
+// Now do a list from an csv
+
+    console.log('about to see some cryptids!');
+
+    listCryptids()
+    .then(cryptids => {      
+        document.getElementById('cryptid-list').innerText = cryptids; 
+        console.log('We have cryptids!');
+    })
+    .catch(error => {
+        console.log('error!');
+        console.error(error);
+    });
+
+    async function listCryptids(cryptids) {
+        const url = '../data/cryptids.txt';
+        const response = await fetch(url);    
+        return await response.text();  
+    }
+
+
+
+
+
+</script>
+
+
